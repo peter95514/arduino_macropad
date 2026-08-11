@@ -11,6 +11,7 @@ BAUD_RATE = 9600
 
 def open_work_env():
     print("啟動工作所需程序...")
+    subprocess.Popen([r"C:\Program Files\Google\Chrome\Application\chrome.exe"])
 
 
 def main():
