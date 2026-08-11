@@ -1,5 +1,8 @@
 import serial
 import subprocess
+import webbrowser
+import time
+import os
 
 # import pyautogui
 
@@ -13,6 +16,24 @@ def open_work_env():
     print("啟動工作所需程序...")
     subprocess.Popen([r"C:\Program Files\Google\Chrome\Application\chrome.exe"])
 
+def open_yt():
+    print("啟動YT...")
+    url = "https://www.youtube.com"
+    edge_path = "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe %s"
+    edge_browser = webbrowser.get(edge_path)
+    edge_browser.open(url)
+
+def init():
+    print("INIT...")
+    dc_path = r"C:\Users\kuany\AppData\Local\Discord\app-1.0.9251\Discord.exe"
+    subprocess.Popen(
+    [dc_path],
+    stdout=subprocess.DEVNULL,  # 隱藏一般輸出
+    stderr=subprocess.DEVNULL,  # 隱藏錯誤輸出
+    creationflags=subprocess.CREATE_NO_WINDOW  # (選用) Windows 專屬：避免彈出黑框
+    )
+    subprocess.Popen([r"C:\Users\kuany\AppData\Local\NGENUITY\current\NGENUITY.exe"])
+
 
 def main():
     print(f"嘗試連接至 {SERIAL_PORT}...")
@@ -25,15 +46,18 @@ def main():
         return
 
     while True:
-        # 如果序列埠有資料進來
-        if ser.in_waiting > 0:
-            # 讀取資料、解碼並去除頭尾空白與換行符號
-            command = ser.readline().decode("utf-8").strip()
+        command = ser.readline().decode('utf-8').strip()
+        
+        # 只要走到下一行，代表一定有收到完整指令了
+        if command:  # 確保收到的不是空字串
             print(f"收到指令: {command}")
 
-            # 根據收到的字串執行對應功能
             if command == "BTN_WORK":
                 open_work_env()
+            elif command == "OPEN_YT":
+                open_yt()
+            elif command == "INIT":
+                init()
 
 
 if __name__ == "__main__":

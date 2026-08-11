@@ -24,10 +24,20 @@ void loop() {
         Serial.print(" | Command Code: 0x");
         Serial.println(IrReceiver.decodedIRData.command, HEX);*/
 
-        if (command == 0x45) {
+        if (command == 0x45) { //CH-
+            Serial.println("BTN_WORK");
+        }
+        else if (command == 0xC) { //1
+            Serial.println("INIT");
+        }
+        else if (command == 0x18) { //2
+            Serial.println("OPEN_YT");
+        }
+        else if (command == 0x5E) { //3
             Serial.println("BTN_WORK");
         }
 
+        delay(400);
         IrReceiver.resume();
     }
 }
