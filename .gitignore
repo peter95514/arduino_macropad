@@ -5,4 +5,4 @@ venv/
 controller/*.yaml
 
 src/build/
-
+src/dist/
